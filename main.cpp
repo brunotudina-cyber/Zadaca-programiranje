@@ -1,5 +1,3 @@
-int main()
-{
 
 #include <iostream>
 #include <iomanip>
@@ -10,7 +8,7 @@ const int PRAG_POPUSTA = 5;
 const double STOPA_POPUSTA = 0.10;
 
 int ukupnoUlaznica = 0;
-double ukupniPrihod = 0.0;
+double ukupniPrihod = 0;
 
 bool ispravanUnos(int kolicina);
 double izracunajIznos(int kolicina);
@@ -22,32 +20,25 @@ int main() {
     cout << fixed << setprecision(2);
 
     for (int i = 1; i <= 3; i++) {
-        int redniBroj = i;
         int kolicina;
         double iznos;
 
-        do {
-            cout << "Kupnja " << redniBroj
-                 << " - unesi broj ulaznica (1-30): ";
-            cin >> kolicina;
+        cout << "Unesi broj ulaznica (1-30): ";
+        cin >> kolicina;
 
-            if (!ispravanUnos(kolicina)) {
-                cout << "Neispravan unos! Unesi broj od 1 do 30."
-                     << endl;
-            }
-        } while (!ispravanUnos(kolicina));
+        while (!ispravanUnos(kolicina)) {
+            cout << "Pokusaj ponovno: ";
+            cin >> kolicina;
+        }
 
         iznos = izracunajIznos(kolicina);
         evidentirajKupnju(kolicina, iznos);
-        ispisiKupnju(redniBroj, iznos);
+        ispisiKupnju(i, iznos);
     }
 
     ispisiSazetak();
-
     return 0;
 }
-
-// DEFINICIJE FUNKCIJA
 
 bool ispravanUnos(int kolicina) {
     return kolicina >= 1 && kolicina <= 30;
@@ -65,8 +56,8 @@ double izracunajIznos(int kolicina) {
 }
 
 void evidentirajKupnju(int kolicina, double iznos) {
-    ukupnoUlaznica += kolicina;
-    ukupniPrihod += iznos;
+    ukupnoUlaznica = ukupnoUlaznica + kolicina;
+    ukupniPrihod = ukupniPrihod + iznos;
 }
 
 void ispisiKupnju(int redniBroj, double iznos) {
@@ -77,9 +68,7 @@ void ispisiKupnju(int redniBroj, double iznos) {
 void ispisiSazetak() {
     cout << "Ukupno prodanih ulaznica: "
          << ukupnoUlaznica << endl;
-
     cout << "Ukupni prihod: "
          << ukupniPrihod << " EUR" << endl;
 }
-    return 0;
-}
+
